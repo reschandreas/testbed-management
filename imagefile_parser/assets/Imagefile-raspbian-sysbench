@@ -1,0 +1,5 @@
+FROM raspbian
+ARCH ARM64
+
+RUN sudo apt update
+RUN sudo apt install -y sysbench

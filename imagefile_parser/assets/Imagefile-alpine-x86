@@ -1,0 +1,43 @@
+FROM https://nl.alpinelinux.org/alpine/v3.6/releases/x86/alpine-extended-3.6.1-x86.iso
+CHECKSUM a6c6958b4c5fbed04a83e3d2a072313a08fb53668e7441117a28867a25404208
+ARCH X86
+PRESEED answers
+OBSERVE_BUILD
+VM_TYPE Linux26_64
+SSH_USER root
+SSH_PASSWORD alpine
+SHUTDOWN_CMD poweroff
+BOOT_TIME 30s
+
+PXE_KERNEL vmlinuz-hardened
+PXE_OPTIONS root=/dev/nfs rootfstype=nfs initrd=%TFTP_ROOT%/pxe nfsroot=%SERVER_IP%:%NFS_ROOT% ip=dhcp rw console=ttyS1 console=tty0 net.ifnames=0 modules=sd-mod,usb-storage,ext4,nfs
+
+FS ext4 /boot boot 100M 2048 83
+FS ext4 /swap swap 0 206848 82
+FS ext4 / root 0 2256896 83
+
+BOOTCMD <wait10><wait10><wait10>
+BOOTCMD <enter><wait5>root<enter><wait>
+BOOTCMD ifconfig eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait5>
+BOOTCMD wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/answers<enter><wait>
+BOOTCMD setup-alpine -f answers<enter><wait10>
+BOOTCMD <wait>
+BOOTCMD alpine<enter><wait>
+BOOTCMD alpine<enter><wait10>
+BOOTCMD <wait60>
+BOOTCMD y<enter>
+BOOTCMD <wait120>
+BOOTCMD rc-service sshd stop<enter>
+BOOTCMD mount /dev/sda3 /mnt<enter>
+BOOTCMD echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>
+BOOTCMD umount /mnt<enter>
+BOOTCMD reboot<enter>
+
+RUN ls /boot/
+RUN echo "kernel/drivers/net/ethernet/intel/e1000/*.ko" > /etc/mkinitfs/features.d/network.modules
+RUN echo "/usr/share/udhcpc/default.script" > /etc/mkinitfs/features.d/dhcp.files
+RUN echo "kernel/net/packet/af_packet.ko" > /etc/mkinitfs/features.d/dhcp.modules
+RUN echo "kernel/fs/nfs/*" > /etc/mkinitfs/features.d/nfs.modules
+RUN echo 'features="ata base ide scsi usb virtio ext4 squashfs network dhcp nfs"' > /etc/mkinitfs/mkinitfs.conf
+RUN mkinitfs -o /boot/pxe
+RUN ls /boot/

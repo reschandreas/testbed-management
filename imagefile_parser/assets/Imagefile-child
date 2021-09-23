@@ -1,0 +1,13 @@
+FROM raspbian
+
+RUN date > /etc/generated_at
+RUN apt update && apt install -y nginx
+
+#RUN touch /root/cron
+#RUN touch /run.sh
+#RUN echo "@reboot sh /run.sh" >> /root/cron
+#RUN /usr/bin/crontab /root/cron
+FILE ./run.sh /run.sh
+ENTRYPOINT sh /run.sh
+#RUN echo "echo '<html><head><meta http-equiv=\"refresh\" content=\"0; URL=https://btznr.xyz/\" /></head></html>' > /var/www/html/index.html" >> run.sh
+#RUN echo '<html><head><meta http-equiv="refresh" content="0; URL=https://btznr.xyz/" /></head></html>' > /var/www/html/index.html

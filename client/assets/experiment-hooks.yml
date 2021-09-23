@@ -1,0 +1,8 @@
+services:
+  stresstest:
+    image: fio
+    replicas: 2
+stop:
+  log:
+    - message: "shutdown"
+      occurrence: 2

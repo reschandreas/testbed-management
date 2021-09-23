@@ -1,0 +1,4 @@
+pipeline:
+  batch:
+    size: 125
+    delay: 50

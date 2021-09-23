@@ -1,0 +1,3 @@
+FROM raspbian
+ARCH ARM64
+RUN sudo apt install -y iperf iperf3

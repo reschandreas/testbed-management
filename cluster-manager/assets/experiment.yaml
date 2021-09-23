@@ -1,0 +1,11 @@
+services:
+  nginx:
+    hostname: plain_nginx
+    image: raspbian
+    replicas: 1
+    node: dc:a6:32:77:2f:7b
+  reschio:
+    hostname: reschio
+    image: reschio
+    replicas: 1
+    node: dc:a6:32:76:3d:71

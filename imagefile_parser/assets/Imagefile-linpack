@@ -1,0 +1,6 @@
+FROM raspbian
+ARCH ARM64
+
+RUN cd /home/pi
+RUN wget -O linpack.c http://www.netlib.org/benchmark/linpackc.new
+RUN cc -O3 -o linpack linpack.c -lm

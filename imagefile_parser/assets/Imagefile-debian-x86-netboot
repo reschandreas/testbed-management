@@ -1,0 +1,29 @@
+FROM debian-10.10.0-amd64-netinst.iso
+CHECKSUM c433254a7c5b5b9e6a05f9e1379a0bd6ab3323f89b56537b684b6d1bd1f8b6ad
+ARCH X86
+OBSERVE_BUILD
+VM_TYPE ubuntu-64
+SSH_USER debian
+SSH_PASSWORD debian
+SHUTDOWN_CMD echo "debian" | sudo -S shutdown -P now
+BOOT_TIME 10s
+
+PXE_KERNEL vmlinuz-4.19.0-17-amd64
+PXE_OPTIONS root=/dev/nfs initrd=%TFTP_ROOT%/initrd.img-4.19.0-17-amd64 nfsroot=%SERVER_IP%:%NFS_ROOT% ip=dhcp rw console=ttyS1 console=tty0
+
+FS ext4 / root 0 2048 83
+
+BOOTCMD <wait5><enter><wait5><enter><wait5>
+BOOTCMD E<enter><wait5>G<down><wait5><enter><wait5><enter><wait5><enter>
+BOOTCMD <wait30s><enter><wait2><enter><wait2>
+BOOTCMD root<enter><wait2>root<enter><wait2>
+BOOTCMD debian<enter><wait2><enter><wait2>
+BOOTCMD debian<enter><wait>debian<enter><wait4>
+BOOTCMD <wait6><enter><wait><enter><wait>
+BOOTCMD <enter><wait><enter><wait><left><enter><wait5>
+BOOTCMD <wait80s><enter><wait5>
+BOOTCMD G<down><enter><wait><enter><wait5><enter><wait70s><enter><wait10s>
+BOOTCMD <spacebar><down><down><down><down><down><down><down><down><down><down><spacebar><enter>
+BOOTCMD <wait130s><enter><wait7>
+BOOTCMD <down><enter><wait10><enter><wait5>
+BOOTCMD <wait20>root<enter><wait>root<enter><wait2>apt update && apt install -y sudo && usermod -aG sudo debian && echo "debian ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers<enter><wait20>

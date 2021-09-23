@@ -1,0 +1,18 @@
+[package]
+name = "imagefile_parser"
+version = "0.1.0"
+authors = ["Andreas Resch <andreas@resch.io>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = "2.33.2"
+string-builder = "0.2.0"
+cmd_lib = "1.0.12"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+structs = { path = "../structs" }
+colored = "2"
+url = "2.2.2"
+reqwest = { version = "0.11.4", features = ["json", "blocking"] }

@@ -1,0 +1,11 @@
+//Massive help from https://askubuntu.com/q/1273084
+FROM ubuntu-20.04.2-preinstalled-server-arm64+raspi.img
+
+FS fat /boot/firmware boot 256M 2024 c
+FS ext4 / root 0 526336 83
+
+CONFIG /boot/firmware/cmdline.txt
+RUN zcat /boot/vmlinuz-5.4.0-1028-raspi > /boot/firmware/vmlinux
+RUN echo 'net.ifnames=0 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=LABEL=writable root=/dev/nfs nfsroot=%SERVER_IP%:%NFS_ROOT%,vers=3,rw  elevator=deadline rootwait fixrtc' > /boot/firmware/cmdline.txt
+RUN echo '[all]\nkernel=vmlinux\ninitramfs initrd.img followkernel' >> /boot/firmware/usercfg.txt
+RUN sed -i 's|PasswordAuthentication no|#PasswordAuthentication no|g' /etc/ssh/sshd_config

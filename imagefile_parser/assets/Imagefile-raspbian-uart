@@ -1,0 +1,16 @@
+FROM https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/2021-05-07-raspios-buster-armhf-lite.zip
+
+ON-SDCARD
+
+FS vfat /boot boot 256M 8192 c
+FS ext4 / root 0 532480 83
+
+RUN touch /boot/ssh
+RUN echo 'localhost' > /etc/hostname
+
+RUN touch /root/cron
+RUN touch /run.sh
+RUN echo "@reboot sh /run.sh" >> /root/cron
+RUN /usr/bin/crontab /root/cron
+
+RUN echo "enable_uart=1" >> /boot/config.txt

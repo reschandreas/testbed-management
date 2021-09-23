@@ -1,0 +1,19 @@
+FROM 2021-05-07-raspios-buster-armhf-lite.img
+ARCH ARM64
+
+FS vfat /boot boot 256M 8192 c
+FS ext4 / root 0 532480 83
+
+CONFIG /boot/cmdline.txt
+
+RUN cat /boot/cmdline.txt
+
+RUN echo 'console=serial0,115200 console=tty root=/dev/nfs nfsroot=%SERVER_IP%:%NFS_ROOT%,vers=3 rw ip=dhcp rootwait elevator=deadline' > /boot/cmdline.txt
+RUN sed -i /UUID/d /etc/fstab
+RUN touch /boot/ssh
+RUN mkdir /root/.ssh
+RUN sed -i 's|#PermitRootLogin prohibit-password|PermitRootLogin yes|g' /etc/ssh/sshd_config
+RUN echo 'localhost' > /etc/hostname
+RUN echo "enable_uart=1" >> /boot/config.txt
+RUN sudo apt-get update
+RUN sudo apt-get -y install nginx

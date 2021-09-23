@@ -1,0 +1,4 @@
+FROM raspbian
+ARCH ARM64
+
+RUN sudo apt install stress

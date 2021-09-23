@@ -1,0 +1,24 @@
+FROM https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/2021-05-07-raspios-buster-armhf-lite.zip
+
+FS vfat /boot boot 256M 8192 c
+FS ext4 / root 0 532480 83
+
+ON-DEVICE
+ARCH ARM64
+
+RUN touch /boot/ssh
+RUN echo 'localhost' > /etc/hostname
+RUN apt update && apt install -y nginx libnginx-mod-http-lua
+RUN usermod -a -G gpio www-data
+
+FILE script.py /home/pi/script.py
+FILE nginxpower.conf /etc/nginx/sites-available/default
+
+RUN touch /root/cron
+RUN touch /run.sh
+RUN echo "#!/usr/bin/env sh" > /run.sh
+RUN echo "chmod 777 /home/pi/script.py" > /run.sh
+RUN echo "chmod u+s /home/pi/script.py" > /run.sh
+RUN echo "chmod g+s /home/pi/script.py" > /run.sh
+RUN echo "@reboot sh /run.sh" >> /root/cron
+RUN /usr/bin/crontab /root/cron

@@ -1,0 +1,35 @@
+FROM http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.5-server-amd64.iso
+CHECKSUM 8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996
+
+ARCH X86
+PRESEED preseed.cfg
+//OBSERVE_BUILD
+VM_TYPE ubuntu-64
+SSH_USER vagrant
+SSH_PASSWORD vagrant
+SHUTDOWN_CMD echo 'vagrant' | sudo -S shutdown -P now
+BOOT_TIME 10s
+
+PXE_KERNEL vmlinuz-4.15.0-112-generic
+PXE_OPTIONS root=/dev/nfs initrd=%TFTP_ROOT%/initrd.img-4.15.0-112-generic nfsroot=%SERVER_IP%:%NFS_ROOT% ip=dhcp rw console=ttyS1 console=tty0
+
+FS ext4 / root 0 1155530752 83
+
+BOOTCMD <esc><wait>
+BOOTCMD <esc><wait>
+BOOTCMD <enter><wait>
+BOOTCMD /install/vmlinuz<wait>
+BOOTCMD  initrd=/install/initrd.gz
+BOOTCMD  auto-install/enable=true
+BOOTCMD  debconf/priority=critical
+BOOTCMD  netcfg/get_domain=vm<wait>
+BOOTCMD  netcfg/get_hostname=vagrant<wait>
+BOOTCMD  grub-installer/bootdev=/dev/sda<wait>
+BOOTCMD  preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>
+BOOTCMD  -- <wait>
+BOOTCMD <enter><wait>
+
+RUN echo 'vagrant' | sudo -S chmod -R 777 /boot/
+RUN ls -lah /boot/
+RUN echo 'vagrant' | sudo -S mkdir /root/.ssh/
+RUN echo 'vagrant' | sudo -S touch /root/.ssh/authorized_keys

@@ -1,0 +1,7 @@
+FROM raspbian
+ARCH ARM64
+RUN date > /etc/generated_at
+RUN apt update && apt install -y nginx bc
+
+FILE ./run.sh /run.sh
+ENTRYPOINT sh /run.sh

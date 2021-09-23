@@ -1,0 +1,13 @@
+version: "2.3"
+
+services:
+  logstash:
+    hostname: logstash
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.13.4
+    ports:
+      - "8080:8080"
+    volumes:
+      - /etc/cluster-manager/logstash/pipeline/:/usr/share/logstash/pipeline/
+      - /etc/cluster-manager/logstash/settings/:/usr/share/logstash/config/
+      - /etc/cluster-manager/logstash/logs/:/var/hostlogs/
