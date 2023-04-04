@@ -17,4 +17,4 @@ rusqlite = { version = "0.25.3", features = ["chrono"] }
 chrono = { version = "0.4.24", features = ["serde"]}
 prettytable-rs = { version = "0.8.0", git = "https://github.com/reschandreas/prettytable-rs" }
 itertools = "0.10.5"
-config = "0.11.0"
+config = "0.13.3"
