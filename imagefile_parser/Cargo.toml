@@ -15,4 +15,4 @@ serde_json = "1.0"
 structs = { path = "../structs" }
 colored = "2"
 url = "2.2.2"
-reqwest = { version = "0.11.4", features = ["json", "blocking"] }
+reqwest = { version = "0.11.16", features = ["json", "blocking"] }
