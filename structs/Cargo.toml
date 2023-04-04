@@ -14,7 +14,7 @@ names = "0.11.0"
 colored = "2"
 yaml-rust = "0.4"
 rusqlite = { version = "0.25.3", features = ["chrono"] }
-chrono = { version = "0.4.19", features = ["serde"]}
+chrono = { version = "0.4.24", features = ["serde"]}
 prettytable-rs = { version = "0.8.0", git = "https://github.com/reschandreas/prettytable-rs" }
 itertools = "0.10.1"
 config = "0.11.0"
