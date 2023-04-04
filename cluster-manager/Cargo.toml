@@ -22,7 +22,7 @@ sudo = "0.6.0"
 rand = "0.8.5"
 which = "4.2.2"
 string-builder = "0.2.0"
-linemux = "0.2.3"
+linemux = "0.3.0"
 tokio = { version = "1.10.1", features = ["full"] }
 actix-web = "4.3.1"
 env_logger = "0.10.0"
