@@ -9,7 +9,7 @@ edition = "2018"
 [dependencies]
 clap = "4.2.1"
 string-builder = "0.2.0"
-cmd_lib = "1.0.12"
+cmd_lib = "1.3.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 structs = { path = "../structs" }

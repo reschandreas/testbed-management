@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 clap = "4.2.1"
-cmd_lib = "1.0.12"
+cmd_lib = "1.3.0"
 prettytable-rs = { version = "0.8.0", git = "https://github.com/reschandreas/prettytable-rs" }
 structs = { path = "../structs" }
 colored = "2"
