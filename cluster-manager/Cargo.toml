@@ -27,5 +27,5 @@ tokio = { version = "1.10.1", features = ["full"] }
 actix-web = "4.3.1"
 env_logger = "0.9.0"
 actix-rt = "2.2.0"
-actix-multipart = "0.3.0"
+actix-multipart = "0.6.0"
 futures = "0.3.28"
