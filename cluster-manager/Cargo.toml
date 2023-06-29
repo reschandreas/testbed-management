@@ -23,7 +23,7 @@ rand = "0.8.5"
 which = "4.4.0"
 string-builder = "0.2.0"
 linemux = "0.3.0"
-tokio = { version = "1.27.0", features = ["full"] }
+tokio = { version = "1.29.1", features = ["full"] }
 actix-web = "4.3.1"
 env_logger = "0.10.0"
 actix-rt = "2.8.0"
